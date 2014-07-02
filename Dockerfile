@@ -1,4 +1,4 @@
-FROM binhex/base-arch
+FROM binhex/arch-base
 MAINTAINER binhex
 
 # madsonic
