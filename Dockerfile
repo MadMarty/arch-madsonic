@@ -4,6 +4,9 @@ MAINTAINER binhex
 # madsonic
 ##########
 
+# update package databases from the server
+RUN pacman -Sy --noconfirm
+
 # run packer to install madsonic and pre-reqs
 RUN packer -S madsonic --noconfirm
 
