@@ -32,10 +32,12 @@ RUN rm /tmp/transcode.zip
 #################
 
 # map /config to host defined config to store logs, config etc
-VOLUME /config
+#VOLUME /config
+
 
 # map /data to host defined data which contains data to index
-VOLUME /data
+#VOLUME /data
+
 
 # expose port for http
 EXPOSE 4040
@@ -45,6 +47,10 @@ EXPOSE 4050
 
 # set permissions
 #################
+
+# create shared folders
+RUN mkdir -p /config
+RUN mkdir -p /data
 
 # change owner
 RUN chown -R nobody:users /var/madsonic
