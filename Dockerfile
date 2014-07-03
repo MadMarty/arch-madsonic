@@ -4,11 +4,17 @@ MAINTAINER binhex
 # madsonic
 ##########
 
-# run command to download app and all pre-req from aur
-RUN packer -S madsonic --noconfirm
+# run command to force download of correct java version (aur has incorrect version defined)
+RUN pacman -S jre7-openjdk-headless --noconfirm
 
-# expose config to store logs, config etc
+# run command to download app and all pre-req from aur (ignore java-runtime, wrong java version)
+RUN packer -S madsonic --ignore java-runtime --noconfirm
+
+# map /config to host defined config to store logs, config etc
 VOLUME /config
+
+# map /data to host defined data which contains data to index
+VOLUME /data
 
 # expose port
 EXPOSE 4040
@@ -21,7 +27,7 @@ RUN chown -R nobody:users /var/madsonic
 RUN chmod -R 775 /var/madsonic
 
 # set process to run as user nobody
-USER nobody
+USER nobody:users
 
 # run script with home dir, host ip and port specified
 CMD /var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040
