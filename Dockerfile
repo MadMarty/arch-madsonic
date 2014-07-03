@@ -25,6 +25,9 @@ ADD http://madsonic.org/download/transcode/20140411_madsonic-transcode_latest_x6
 # unzip to tmp folder
 RUN unzip /tmp/transcode.zip -d /tmp
 
+# create transcode directory
+RUN mkdir -p /var/madsonic/transcode
+
 # copy to install folder
 RUN cp /tmp/linux/* /var/madsonic/transcode
 
