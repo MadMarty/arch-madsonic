@@ -160,8 +160,7 @@ if [ $quiet = 0 ]; then
     echo Started Madsonic [PID $!, ${LOG}]
 fi
 
-# create transcode directory
-mkdir -p ${JAVA_HOME}/transcode
-
-# copy transcoders to transcode folder
-cp /tmp/linux/* ${JAVA_HOME}/transcode
+# if transcode directory exists and is empty then copy transcoders into folder
+if [ -d "${MADSONIC_HOME}/transcode" ]; then
+	find ${MADSONIC_HOME}/transcode -maxdepth 0 -empty -exec cp /tmp/linux/* ${MADSONIC_HOME}/transcode \;
+fi
