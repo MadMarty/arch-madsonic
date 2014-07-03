@@ -4,11 +4,14 @@ MAINTAINER binhex
 # madsonic
 ##########
 
-# run pacman to download pre-req for madsonic (aur package incorrectly downloads the wrong version of java)
-RUN pacman -S jre7-openjdk-headless libcups --noconfirm
+# run packer to install madsonic and pre-reqs
+RUN packer -S madsonic --noconfirm
 
-# run packer to install madsonic only (pre-req downloaded in previous command)
-RUN packer -S madsonic --auronly --noconfirm
+# remove incorrect version of java (no way to prevent this with packer?)
+RUN pacman -Rs jre7-openjdk --noconfirm
+
+# run pacman to install correct version of java (aur package incorrectly downloads the wrong version of java)
+RUN pacman -S jre7-openjdk-headless --noconfirm
 
 # map /config to host defined config to store logs, config etc
 VOLUME /config
