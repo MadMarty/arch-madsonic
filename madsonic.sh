@@ -9,12 +9,6 @@
 #
 ###################################################################################
 
-# create transcode directory
-mkdir -p /config/transcode
-
-# if empty then copy transcoders into folder
-find /config/transcode -maxdepth 0 -empty -exec cp /tmp/linux/* /config/transcode
-
 MADSONIC_HOME=/var/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
