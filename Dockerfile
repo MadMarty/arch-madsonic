@@ -1,8 +1,8 @@
 FROM binhex/arch-base
 MAINTAINER binhex
 
-# install madsonic
-##################
+# install application
+#####################
 
 # update package databases from the server
 RUN pacman -Sy --noconfirm
@@ -28,15 +28,6 @@ RUN unzip /tmp/transcode.zip -d /tmp
 # remove zip
 RUN rm /tmp/transcode.zip
 
-# set permissions
-#################
-
-# change owner
-RUN chown -R nobody:users /var/madsonic
-
-# set permissions
-RUN chmod -R 775 /var/madsonic
-
 # docker settings
 #################
 
@@ -52,9 +43,24 @@ EXPOSE 4040
 # expose port for https
 EXPOSE 4050
 
+# set permissions
+#################
+
+# change owner
+RUN chown -R nobody:users /var/madsonic
+RUN chown -R nobody:users /config
+RUN chown -R nobody:users /data
+
+# set permissions
+RUN chmod -R 775 /var/madsonic
+RUN chmod -R 775 /config
+RUN chmod -R 775 /data
+
+# run application
+#################
+
 # set process to run as user "nobody" group "users"
 USER nobody:users
 
 # run script with home dir, host ip and port specified (http and https)
-# CMD /var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --https-port=4050
 CMD ["/var/madsonic/madsonic.sh", "--home=/config", "--host=0.0.0.0", "--port=4040", "--https-port=4050"]
