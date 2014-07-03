@@ -11,7 +11,7 @@ RUN pacman -Sy --noconfirm
 RUN packer -S madsonic --noconfirm
 
 # run pacman to install correct version of java (aur package incorrectly downloads the wrong version of java)
-RUN pacman -S jre7-openjdk-headless --noconfirm
+RUN pacman -S jre7-openjdk-headless unzip --noconfirm
 
 # copy modified script to madsonic install dir (forces madsonic to be a foreground process)
 ADD madsonic.sh /var/madsonic/madsonic.sh
