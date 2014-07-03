@@ -159,3 +159,9 @@ fi
 if [ $quiet = 0 ]; then
     echo Started Madsonic [PID $!, ${LOG}]
 fi
+
+# create transcode directory
+mkdir -p ${JAVA_HOME}/transcode
+
+# copy transcoders to transcode folder
+cp /tmp/linux/* ${JAVA_HOME}/transcode
