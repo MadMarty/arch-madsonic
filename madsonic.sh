@@ -9,6 +9,12 @@
 #
 ###################################################################################
 
+# create transcode directory
+mkdir -p /config/transcode
+
+# if empty then copy transcoders into folder
+find /config/transcode -maxdepth 0 -empty -exec cp /tmp/linux/* /config/transcode
+
 MADSONIC_HOME=/var/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
@@ -158,9 +164,4 @@ fi
 
 if [ $quiet = 0 ]; then
     echo Started Madsonic [PID $!, ${LOG}]
-fi
-
-# if transcode directory exists and is empty then copy transcoders into folder
-if [ -d "${MADSONIC_HOME}/transcode" ]; then
-	find ${MADSONIC_HOME}/transcode -maxdepth 0 -empty -exec cp /tmp/linux/* ${MADSONIC_HOME}/transcode \;
 fi
