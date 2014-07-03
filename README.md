@@ -1,6 +1,6 @@
 Latest stable Madsonic release from Arch Linux AUR using Packer to compile.
 
-This is a Dockerfile setup for Madsonic - http://www.madsonic.org/
+This is a Dockerfile for Madsonic (fork of Subsonic) - http://www.madsonic.org/
 
 Pull image using:-
 
