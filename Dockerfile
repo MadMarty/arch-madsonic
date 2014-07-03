@@ -25,14 +25,8 @@ ADD http://madsonic.org/download/transcode/20140411_madsonic-transcode_latest_x6
 # unzip to tmp folder
 RUN unzip /tmp/transcode.zip -d /tmp
 
-# create shared folders
-RUN mkdir -p /config/transcode
-
-# copy to transcode folder
-RUN cp /tmp/linux/* /config/transcode
-
 # remove files in tmp
-RUN rm -R /tmp/*
+RUN rm /tmp/transcode.zip
 
 # docker settings
 #################
@@ -54,17 +48,15 @@ EXPOSE 4050
 
 # change owner
 RUN chown -R nobody:users /var/madsonic
-RUN chown -R nobody:users /config
 
 # set permissions
 RUN chmod -R 775 /var/madsonic
-RUN chmod -R 775 /config
 
 # run application
 #################
 
 # set process to run as user "nobody" group "users"
-USER nobody:users
+# USER nobody:users
 
 # run script with home dir, host ip and port specified (http and https)
 CMD ["/var/madsonic/madsonic.sh", "--home=/config", "--host=0.0.0.0", "--port=4040", "--https-port=4050"]

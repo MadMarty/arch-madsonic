@@ -9,6 +9,19 @@
 #
 ###################################################################################
 
+# if transcode directory doesnt exit then copy transcoders
+if [ ! -d "/config/transcode" ]; then
+
+	# copy over ffmpeg and other transcoders
+	mkdir -p /config/transcode
+	cp /tmp/linux/* /config/transcode/
+	
+	# set permissions for user nobody group users
+	chown -R nobody:users /config
+	chmod +x /config/transcode/*
+	
+fi
+
 MADSONIC_HOME=/var/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
@@ -23,7 +36,7 @@ MADSONIC_DEFAULT_PODCAST_FOLDER=/var/media/Podcast
 MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER=/var/media/playlist-import
 MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/var/media/playlist-export
 
-MADSONIC_USER=nobody
+MADSONIC_USER=nobody:users
 
 quiet=0
 
