@@ -56,4 +56,5 @@ EXPOSE 4050
 USER nobody:users
 
 # run script with home dir, host ip and port specified (http and https)
-CMD /var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --https-port=4050
+# CMD /var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --https-port=4050
+CMD ["/var/madsonic/madsonic.sh", "--home=/config", "--host=0.0.0.0", "--port=4040", "--https-port=4050"]
