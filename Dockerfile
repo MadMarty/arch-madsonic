@@ -5,10 +5,10 @@ MAINTAINER binhex
 ##########
 
 # run command to force download of correct java version (aur has incorrect version defined)
-RUN pacman -S jre7-openjdk-headless --noconfirm
+RUN pacman -S jre7-openjdk-headless libcups --noconfirm
 
-# run command to download app and all pre-req from aur (ignore java-runtime, wrong java version)
-RUN packer -S madsonic --ignore java-runtime --noconfirm
+# run command to download app and all pre-req from aur (ignore jre7-openjdk, wrong java version)
+RUN packer -S madsonic --aur --noconfirm
 
 # map /config to host defined config to store logs, config etc
 VOLUME /config
