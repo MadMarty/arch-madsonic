@@ -10,8 +10,8 @@ RUN pacman -Sy --noconfirm
 # run packer to install madsonic and pre-reqs
 RUN packer -S madsonic --noconfirm
 
-# remove incorrect version of java (no way to prevent this with packer?)
-RUN pacman -Rs jre7-openjdk --noconfirm
+# remove incorrect version of java (dd flag forces remval even for apps dependant on it aka madsonic)
+RUN pacman -Rdd jre7-openjdk --noconfirm
 
 # run pacman to install correct version of java (aur package incorrectly downloads the wrong version of java)
 RUN pacman -S jre7-openjdk-headless --noconfirm
