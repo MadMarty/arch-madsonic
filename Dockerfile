@@ -37,6 +37,9 @@ RUN unzip /tmp/transcode.zip -d /tmp
 # remove files in tmp
 RUN rm /tmp/transcode.zip
 
+# copy transcode script to madsonic install dir (downloads and copies transcoders to madsonic homedir)
+ADD transcode.sh /opt/madsonic/transcode.sh
+
 # docker settings
 #################
 

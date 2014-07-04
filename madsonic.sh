@@ -9,20 +9,7 @@
 #
 ###################################################################################
 
-# if transcode directory doesnt exit then copy transcoders
-if [ ! -d "/config/transcode" ]; then
-
-	# copy over ffmpeg and other transcoders
-	mkdir -p /config/transcode
-	cp /tmp/linux/* /config/transcode/
-	
-	# set permissions for user nobody group users
-	chown -R nobody:users /config
-	chmod +x /config/transcode/*
-	
-fi
-
-MADSONIC_HOME=/var/madsonic
+MADSONIC_HOME=/opt/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
 MADSONIC_HTTPS_PORT=0
@@ -30,11 +17,11 @@ MADSONIC_CONTEXT_PATH=/
 MADSONIC_INIT_MEMORY=64
 MADSONIC_MAX_MEMORY=128
 MADSONIC_PIDFILE=
-MADSONIC_DEFAULT_MUSIC_FOLDER=/var/media
-MADSONIC_DEFAULT_UPLOAD_FOLDER=/var/media/Incoming
-MADSONIC_DEFAULT_PODCAST_FOLDER=/var/media/Podcast
-MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER=/var/media/playlist-import
-MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/var/media/playlist-export
+MADSONIC_DEFAULT_MUSIC_FOLDER=/opt/media
+MADSONIC_DEFAULT_UPLOAD_FOLDER=/opt/media/Incoming
+MADSONIC_DEFAULT_PODCAST_FOLDER=/opt/media/Podcast
+MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER=/opt/media/playlist-import
+MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/opt/media/playlist-export
 
 MADSONIC_USER=nobody:users
 
@@ -44,7 +31,7 @@ usage() {
     echo "Usage: madsonic.sh [options]"
     echo "  --help               This small usage guide."
     echo "  --home=DIR           The directory where Madsonic will create files."
-    echo "                       Make sure it is writable. Default: /var/madsonic"
+    echo "                       Make sure it is writable. Default: /opt/madsonic"
     echo "  --host=HOST          The host name or IP address on which to bind Madsonic."
     echo "                       Only relevant if you have multiple network interfaces and want"
     echo "                       to make Madsonic available on only one of them. The default value"
@@ -62,15 +49,15 @@ usage() {
     echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
     echo "  --quiet              Don't print anything to standard out. Default false."
     echo "  --default-music-folder=DIR           Configure Madsonic to use this folder for music.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/var/media/artists'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/artists'"
     echo "  --default-upload-folder=DIR          Configure Madsonic to use this folder for music.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/var/media/Incoming'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/Incoming'"
     echo "  --default-podcast-folder=DIR         Configure Madsonic to use this folder for Podcasts.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/var/media/Podcast'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/Podcast'"
     echo "  --default-playlist-import-folder=DIR Configure Madsonic to use this folder for playlist import.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/var/media/playlist-import'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/playlist-import'"
     echo "  --default-playlist-export-folder=DIR Configure Madsonic to use this folder for playlist export.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/var/media/playlist-export'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/playlist-export'"
     exit 1
 }
 
@@ -147,7 +134,7 @@ if [ -L $0 ] && ([ -e /bin/readlink ] || [ -e /usr/bin/readlink ]); then
 
 fi
 
-cd /var/madsonic
+cd /opt/madsonic
 
 exec ${JAVA} -Xms${MADSONIC_INIT_MEMORY}m -Xmx${MADSONIC_MAX_MEMORY}m \
   -Dsubsonic.home=${MADSONIC_HOME} \
