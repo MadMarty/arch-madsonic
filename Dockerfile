@@ -11,19 +11,19 @@ RUN pacman -Sy --noconfirm
 RUN pacman -S jre7-openjdk-headless libcups unzip --noconfirm
 
 # make destination folder
-RUN mkdir -p /opt/madsonic
+RUN mkdir -p /var/madsonic
 
 # download madsonic
-ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /opt/madsonic/madsonic.zip
+ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /var/madsonic/madsonic.zip
 
 # unzip to folder
-RUN unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
+RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
 
 # remove files in tmp
-RUN rm /opt/madsonic/madsonic.zip
+RUN rm /var/madsonic/madsonic.zip
 
 # copy modified script to madsonic install dir (forces madsonic to be a foreground process)
-ADD madsonic.sh /opt/madsonic/madsonic.sh
+ADD madsonic.sh /var/madsonic/madsonic.sh
 
 # install transcoders
 #####################
@@ -38,7 +38,7 @@ RUN unzip /tmp/transcode.zip -d /tmp
 RUN rm /tmp/transcode.zip
 
 # copy transcode script to madsonic install dir (downloads and copies transcoders to madsonic homedir)
-ADD transcode.sh /opt/madsonic/transcode.sh
+ADD transcode.sh /var/madsonic/transcode.sh
 
 # docker settings
 #################
@@ -59,10 +59,10 @@ EXPOSE 4050
 #################
 
 # change owner
-RUN chown -R nobody:users /opt/madsonic
+RUN chown -R nobody:users /var/madsonic
 
 # set permissions
-RUN chmod -R 775 /opt/madsonic
+RUN chmod -R 775 /var/madsonic
 
 # add conf file
 ###############

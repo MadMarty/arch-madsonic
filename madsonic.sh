@@ -9,29 +9,28 @@
 #
 ###################################################################################
 
-MADSONIC_HOME=/opt/madsonic
+MADSONIC_HOME=/var/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
 MADSONIC_HTTPS_PORT=0
 MADSONIC_CONTEXT_PATH=/
-MADSONIC_INIT_MEMORY=64
-MADSONIC_MAX_MEMORY=128
+MADSONIC_INIT_MEMORY=192
+MADSONIC_MAX_MEMORY=384
 MADSONIC_PIDFILE=
-MADSONIC_DEFAULT_MUSIC_FOLDER=/opt/media
-MADSONIC_DEFAULT_UPLOAD_FOLDER=/opt/media/Incoming
-MADSONIC_DEFAULT_PODCAST_FOLDER=/opt/media/Podcast
-MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER=/opt/media/playlist-import
-MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/opt/media/playlist-export
-
-MADSONIC_USER=nobody:users
-
+MADSONIC_DEFAULT_MUSIC_FOLDER=/var/madsonic/media/artists
+MADSONIC_DEFAULT_UPLOAD_FOLDER=/var/madsonic/media/incoming
+MADSONIC_DEFAULT_PODCAST_FOLDER=/var/madsonic/media/podcast
+MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER=/var/madsonic/media/playlists/import
+MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/var/madsonic/media/playlists/export
+MADSONIC_DEFAULT_PLAYLIST_BACKUP_FOLDER=/var/madsonic/media/playlists/backup
+MADSONIC_DEFAULT_TIMEZONE=
 quiet=0
 
 usage() {
     echo "Usage: madsonic.sh [options]"
     echo "  --help               This small usage guide."
     echo "  --home=DIR           The directory where Madsonic will create files."
-    echo "                       Make sure it is writable. Default: /opt/madsonic"
+    echo "                       Make sure it is writable. Default: /var/madsonic"
     echo "  --host=HOST          The host name or IP address on which to bind Madsonic."
     echo "                       Only relevant if you have multiple network interfaces and want"
     echo "                       to make Madsonic available on only one of them. The default value"
@@ -43,21 +42,25 @@ usage() {
     echo "  --context-path=PATH  The context path, i.e., the last part of the Madsonic"
     echo "                       URL. Typically '/' or '/madsonic'. Default '/'"
     echo "  --init-memory=MB     The memory initial size (Init Java heap size) in megabytes."
-    echo "                       Default: 256"
+    echo "                       Default: 192"
     echo "  --max-memory=MB      The memory limit (max Java heap size) in megabytes."
-    echo "                       Default: 350"
+    echo "                       Default: 384"
     echo "  --pidfile=PIDFILE    Write PID to this file. Default not created."
     echo "  --quiet              Don't print anything to standard out. Default false."
     echo "  --default-music-folder=DIR           Configure Madsonic to use this folder for music.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/artists'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/artists'"
     echo "  --default-upload-folder=DIR          Configure Madsonic to use this folder for music.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/Incoming'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/incoming'"
     echo "  --default-podcast-folder=DIR         Configure Madsonic to use this folder for Podcasts.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/Podcast'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/podcast'"
     echo "  --default-playlist-import-folder=DIR Configure Madsonic to use this folder for playlist import.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/playlist-import'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/playlists/import'"
     echo "  --default-playlist-export-folder=DIR Configure Madsonic to use this folder for playlist export.  This option "
-    echo "                                       only has effect the first time Madsonic is started. Default '/opt/media/playlist-export'"
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/playlists/export'"
+    echo "  --default-playlist-backup-folder=DIR Configure Madsonic to use this folder for playlist backup.  This option "
+    echo "                                       only has effect the first time Madsonic is started. Default '/var/madsonic/media/playlists/backup'"
+    echo "  --timezone=Zone/City                 Configure Madsonic to use other timezone for time correction"
+    echo "                                       Example 'Europe/Vienna', 'US/Central', 'America/New_York'"
     exit 1
 }
 
@@ -109,6 +112,12 @@ while [ $# -ge 1 ]; do
         --default-playlist-export-folder=?*)
             MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=${1#--default-playlist-export-folder=}
             ;;
+        --default-playlist-backup-folder=?*)
+            MADSONIC_DEFAULT_PLAYLIST_BACKUP_FOLDER=${1#--default-playlist-backup-folder=}
+            ;;
+		--timezone=?*)
+           MADSONIC_DEFAULT_TIMEZONE=${1#--timezone=}
+           ;;
         *)
             usage
             ;;
@@ -131,25 +140,24 @@ rm -f ${LOG}
 cd $(dirname $0)
 if [ -L $0 ] && ([ -e /bin/readlink ] || [ -e /usr/bin/readlink ]); then
     cd $(dirname $(readlink $0))
-
 fi
 
-cd /opt/madsonic
-
-exec ${JAVA} -Xms${MADSONIC_INIT_MEMORY}m -Xmx${MADSONIC_MAX_MEMORY}m \
-  -Dsubsonic.home=${MADSONIC_HOME} \
-  -Dsubsonic.host=${MADSONIC_HOST} \
-  -Dsubsonic.port=${MADSONIC_PORT} \
-  -Dsubsonic.httpsPort=${MADSONIC_HTTPS_PORT} \
-  -Dsubsonic.contextPath=${MADSONIC_CONTEXT_PATH} \
-  -Dsubsonic.defaultMusicFolder=${MADSONIC_DEFAULT_MUSIC_FOLDER} \
-  -Dsubsonic.defaultUploadFolder=${MADSONIC_DEFAULT_UPLOAD_FOLDER} \
-  -Dsubsonic.defaultPodcastFolder=${MADSONIC_DEFAULT_PODCAST_FOLDER} \
-  -Dsubsonic.defaultPlaylistFolder=${MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER} \
-  -Dsubsonic.defaultPlaylistExportFolder=${MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER} \
+${JAVA} -Xms${MADSONIC_INIT_MEMORY}m -Xmx${MADSONIC_MAX_MEMORY}m \
+  -Dmadsonic.home=${MADSONIC_HOME} \
+  -Dmadsonic.host=${MADSONIC_HOST} \
+  -Dmadsonic.port=${MADSONIC_PORT} \
+  -Dmadsonic.httpsPort=${MADSONIC_HTTPS_PORT} \
+  -Dmadsonic.contextPath=${MADSONIC_CONTEXT_PATH} \
+  -Dmadsonic.defaultMusicFolder=${MADSONIC_DEFAULT_MUSIC_FOLDER} \
+  -Dmadsonic.defaultUploadFolder=${MADSONIC_DEFAULT_UPLOAD_FOLDER} \
+  -Dmadsonic.defaultPodcastFolder=${MADSONIC_DEFAULT_PODCAST_FOLDER} \
+  -Dmadsonic.defaultPlaylistImportFolder=${MADSONIC_DEFAULT_PLAYLIST_IMPORT_FOLDER} \
+  -Dmadsonic.defaultPlaylistExportFolder=${MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER} \
+  -Dmadsonic.defaultPlaylistBackupFolder=${MADSONIC_DEFAULT_PLAYLIST_BACKUP_FOLDER} \
+  -Duser.timezone=${MADSONIC_DEFAULT_TIMEZONE} \
   -Djava.awt.headless=true \
   -verbose:gc \
-  -jar madsonic-booter.jar >> ${LOG} 2>&1
+  -jar madsonic-booter.jar > ${LOG} 2>&1
 
 # Write pid to pidfile if it is defined.
 if [ $MADSONIC_PIDFILE ]; then
@@ -159,3 +167,4 @@ fi
 if [ $quiet = 0 ]; then
     echo Started Madsonic [PID $!, ${LOG}]
 fi
+
