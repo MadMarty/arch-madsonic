@@ -17,7 +17,7 @@ RUN mkdir -p /opt/madsonic
 ADD http://madsonic.org/download/5.0/20140208_madsonic-5.0.3860-standalone.zip /opt/madsonic/madsonic.zip
 
 # unzip to folder
-RUN unzip /opt/madsonic/madsonic.zip
+RUN unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
 
 # remove files in tmp
 RUN rm /opt/madsonic/madsonic.zip
