@@ -14,7 +14,7 @@ RUN pacman -S jre7-openjdk-headless libcups unzip --noconfirm
 RUN mkdir -p /opt/madsonic
 
 # download madsonic
-ADD http://madsonic.org/download/5.0/20140208_madsonic-5.0.3860-standalone.zip /opt/madsonic/madsonic.zip
+ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /opt/madsonic/madsonic.zip
 
 # unzip to folder
 RUN unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
@@ -29,7 +29,7 @@ ADD madsonic.sh /opt/madsonic/madsonic.sh
 #####################
 
 # download from madsonic website
-ADD http://madsonic.org/download/transcode/20140411_madsonic-transcode_latest_x64.zip /tmp/transcode.zip
+ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /tmp/transcode.zip
 
 # unzip to tmp folder
 RUN unzip /tmp/transcode.zip -d /tmp
