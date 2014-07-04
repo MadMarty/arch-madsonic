@@ -7,14 +7,23 @@ MAINTAINER binhex
 # update package databases from the server
 RUN pacman -Sy --noconfirm
 
-# run packer to install madsonic and pre-reqs
-RUN packer -S madsonic --noconfirm
+# install pre-req for application
+RUN pacman -S jre7-openjdk-headless libcups unzip --noconfirm
 
-# run pacman to install correct version of java (aur package incorrectly downloads the wrong version of java)
-RUN pacman -S jre7-openjdk-headless unzip --noconfirm
+# make destination folder
+RUN mkdir -p /opt/madsonic
+
+# download madsonic
+ADD http://madsonic.org/download/5.0/20140208_madsonic-5.0.3860-standalone.zip /opt/madsonic/madsonic.zip
+
+# unzip to folder
+RUN unzip /opt/madsonic/madsonic.zip
+
+# remove files in tmp
+RUN rm /opt/madsonic/madsonic.zip
 
 # copy modified script to madsonic install dir (forces madsonic to be a foreground process)
-ADD madsonic.sh /var/madsonic/madsonic.sh
+ADD madsonic.sh /opt/madsonic/madsonic.sh
 
 # install transcoders
 #####################
@@ -31,11 +40,11 @@ RUN rm /tmp/transcode.zip
 # docker settings
 #################
 
-# map /config to host defined config to store logs, config etc
+# map /config to host defined config path (used to store configuration from app)
 VOLUME /config
 
-# map /data to host defined data which contains data to index
-VOLUME /data
+# map /media to host defined media path (used to read/write to media library)
+VOLUME /media
 
 # expose port for http
 EXPOSE 4040
@@ -47,16 +56,18 @@ EXPOSE 4050
 #################
 
 # change owner
-RUN chown -R nobody:users /var/madsonic
+RUN chown -R nobody:users /opt/madsonic
 
 # set permissions
-RUN chmod -R 775 /var/madsonic
+RUN chmod -R 775 /opt/madsonic
 
-# run application
-#################
+# add conf file
+###############
 
-# set process to run as user "nobody" group "users"
-# USER nobody:users
+ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
 
-# run script with home dir, host ip and port specified (http and https)
-CMD ["/var/madsonic/madsonic.sh", "--home=/config", "--host=0.0.0.0", "--port=4040", "--https-port=4050"]
+# run supervisor
+################
+
+# run supervisor
+CMD ["supervisord", "-c", "/etc/supervisor.conf", "-n"]
