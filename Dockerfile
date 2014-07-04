@@ -8,7 +8,7 @@ MAINTAINER binhex
 RUN pacman -Sy --noconfirm
 
 # install pre-req for application
-RUN pacman -S jre7-openjdk-headless libcups unzip --noconfirm
+RUN pacman -S jre7-openjdk libcups unzip --noconfirm
 
 # make destination folder
 RUN mkdir -p /var/madsonic
