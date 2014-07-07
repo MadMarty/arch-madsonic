@@ -9,6 +9,9 @@
 #
 ###################################################################################
 
+LANG=en_UK.UTF-8
+LC_ALL=en_UK.UTF-8
+
 MADSONIC_HOME=/var/madsonic
 MADSONIC_HOST=0.0.0.0
 MADSONIC_PORT=4040
@@ -25,9 +28,6 @@ MADSONIC_DEFAULT_PLAYLIST_EXPORT_FOLDER=/var/madsonic/media/playlists/export
 MADSONIC_DEFAULT_PLAYLIST_BACKUP_FOLDER=/var/madsonic/media/playlists/backup
 MADSONIC_DEFAULT_TIMEZONE=
 quiet=0
-
-export LANG=en_UK.UTF-8
-export LC_ALL=en_UK.UTF-8
 
 usage() {
     echo "Usage: madsonic.sh [options]"
