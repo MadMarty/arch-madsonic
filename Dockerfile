@@ -43,6 +43,9 @@ ADD transcode.sh /var/madsonic/transcode.sh
 # docker settings
 #################
 
+# set env variable for java
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk/jre/bin/
+
 # map /config to host defined config path (used to store configuration from app)
 VOLUME /config
 
