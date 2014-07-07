@@ -8,10 +8,10 @@ MAINTAINER binhex
 RUN pacman -Sy --noconfirm
 
 # install pre-req for application
-RUN pacman -S jre7-openjdk libcups unzip --noconfirm
+RUN pacman -S libcups jre7-openjdk-headless unzip --noconfirm
 
 # make destination folder
-RUN mkdir -p /var/madsonic
+RUN mkdir -p /var/madsonic/media
 
 # download madsonic
 ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /var/madsonic/madsonic.zip
