@@ -44,7 +44,7 @@ ADD transcode.sh /var/madsonic/transcode.sh
 #################
 
 # set env variable for java
-ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk/jre/bin/
+ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk/jre
 
 # map /config to host defined config path (used to store configuration from app)
 VOLUME /config
