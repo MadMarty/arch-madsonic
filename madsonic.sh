@@ -26,6 +26,9 @@ MADSONIC_DEFAULT_PLAYLIST_BACKUP_FOLDER=/var/madsonic/media/playlists/backup
 MADSONIC_DEFAULT_TIMEZONE=
 quiet=0
 
+export LANG=en_UK.UTF-8
+export LC_ALL=en_UK.UTF-8
+
 usage() {
     echo "Usage: madsonic.sh [options]"
     echo "  --help               This small usage guide."
