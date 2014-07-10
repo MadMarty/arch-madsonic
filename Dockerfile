@@ -14,7 +14,7 @@ RUN pacman -S libcups jre7-openjdk-headless fontconfig unzip --noconfirm
 RUN mkdir -p /var/madsonic/media
 
 # download madsonic
-ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /var/madsonic/madsonic.zip
+ADD http://madsonic.org/download/5.0/20140702_madsonic-5.0.3880-standalone.zip /var/madsonic/madsonic.zip
 
 # unzip to folder
 RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
@@ -22,8 +22,8 @@ RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
 # remove files in tmp
 RUN rm /var/madsonic/madsonic.zip
 
-# copy modified script to madsonic install dir (forces madsonic to be a foreground process)
-ADD madsonic.sh /var/madsonic/madsonic.sh
+# force process to run as foreground task
+RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /var/madsonic/madsonic.sh
 
 # install transcoders
 #####################
