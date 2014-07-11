@@ -19,7 +19,7 @@ ADD http://madsonic.org/download/5.0/20140702_madsonic-5.0.3880-standalone.zip /
 # unzip to folder
 RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
 
-# remove files in tmp
+# remove zip
 RUN rm /var/madsonic/madsonic.zip
 
 # force process to run as foreground task
