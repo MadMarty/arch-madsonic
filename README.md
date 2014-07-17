@@ -1,9 +1,9 @@
-madsonic
+Madsonic
 =========
 
-Latest stable Madsonic release from Arch Linux AUR using Packer to compile.
+Madsonic - http://www.madsonic.org/
 
-This is a Dockerfile for Madsonic (fork of Subsonic) - http://www.madsonic.org/
+Latest stable Madsonic release from Arch Linux AUR using Packer to compile.
 
 **Pull image**
 
