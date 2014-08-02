@@ -78,9 +78,6 @@ ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
 # completely empty pacman cache folder
 RUN pacman -Scc --noconfirm
 
-# remove temporary files
-RUN rm -rf /tmp/*
-
 # run supervisor
 ################
 
