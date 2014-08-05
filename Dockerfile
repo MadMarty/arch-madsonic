@@ -10,8 +10,9 @@ RUN pacman -Sy --noconfirm
 # install pre-req for application
 RUN pacman -S libcups jre7-openjdk-headless fontconfig unzip --noconfirm
 
-# make destination folder
+# make destination folders
 RUN mkdir -p /var/madsonic/media
+RUN mkdir -p /var/madsonic/transcode
 
 # download madsonic
 ADD http://madsonic.org/download/5.0/20140702_madsonic-5.0.3880-standalone.zip /var/madsonic/madsonic.zip
@@ -28,14 +29,14 @@ RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.j
 # install transcoders
 #####################
 
-# download from madsonic website
-ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /home/nobody/transcode.zip
+# download madsonic transcoders
+ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
-# unzip to tmp folder
-RUN unzip /home/nobody/transcode.zip -d /home/nobody
+# unzip to folder
+RUN unzip /var/madsonic/transcode/transcode.zip -d /var/madsonic/transcode
 
-# remove zip in tmp
-RUN rm /home/nobody/transcode.zip
+# remove zip
+RUN rm /var/madsonic/transcode/transcode.zip
 
 # copy transcode script to madsonic install dir (copies transcoders to madsonic install dir)
 ADD transcode.sh /var/madsonic/transcode.sh
