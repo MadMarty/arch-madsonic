@@ -29,15 +29,15 @@ RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.j
 #####################
 
 # download from madsonic website
-ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /tmp/transcode.zip
+ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /home/nobody/transcode.zip
 
 # unzip to tmp folder
-RUN unzip /tmp/transcode.zip -d /tmp
+RUN unzip /home/nobody/transcode.zip -d /home/nobody
 
-# remove files in tmp
-RUN rm /tmp/transcode.zip
+# remove zip in tmp
+RUN rm /home/nobody/transcode.zip
 
-# copy transcode script to madsonic install dir (downloads and copies transcoders to madsonic homedir)
+# copy transcode script to madsonic install dir (copies transcoders to madsonic install dir)
 ADD transcode.sh /var/madsonic/transcode.sh
 
 # docker settings
