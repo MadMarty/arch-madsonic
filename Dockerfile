@@ -15,7 +15,8 @@ RUN mkdir -p /var/madsonic/media
 RUN mkdir -p /var/madsonic/transcode
 
 # download madsonic
-ADD http://madsonic.org/download/5.0/20140702_madsonic-5.0.3880-standalone.zip /var/madsonic/madsonic.zip
+#ADD http://madsonic.org/download/5.0/20140702_madsonic-5.0.3880-standalone.zip /var/madsonic/madsonic.zip
+ADD http://madsonic.org/download/5.1/20140702_madsonic-5.1.4800.beta2-standalone.zip /var/madsonic/madsonic.zip
 
 # unzip to folder
 RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
