@@ -3,7 +3,7 @@ Madsonic
 
 Madsonic - http://www.madsonic.org/
 
-Latest stable Madsonic release from Arch Linux AUR using Packer to compile.
+Latest Public Release of Madsonic.
 
 **Pull image**
 
