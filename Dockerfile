@@ -30,7 +30,7 @@ RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.j
 #####################
 
 # download madsonic transcoders
-ADD http://madsonic.org/download/transcode/20140702_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+ADD http://madsonic.org/download/transcode/20140819_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
 # unzip to folder
 RUN unzip /var/madsonic/transcode/transcode.zip -d /var/madsonic/transcode
