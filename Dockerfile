@@ -15,7 +15,7 @@ RUN mkdir -p /var/madsonic/media
 RUN mkdir -p /var/madsonic/transcode
 
 # download madsonic
-ADD http://madsonic.org/download/5.1/20140918_madsonic-5.1.5110-standalone.zip /var/madsonic/madsonic.zip
+ADD http://madsonic.org/download/5.1/20140927_madsonic-5.1.5150-standalone.zip /var/madsonic/madsonic.zip
 
 # unzip to folder
 RUN unzip /var/madsonic/madsonic.zip -d /var/madsonic
@@ -30,7 +30,7 @@ RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.j
 #####################
 
 # download madsonic transcoders
-ADD http://madsonic.org/download/transcode/20140819_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+ADD http://madsonic.org/download/transcode/20140927_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
 # unzip to folder
 RUN unzip /var/madsonic/transcode/transcode.zip -d /var/madsonic/transcode
