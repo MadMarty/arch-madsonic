@@ -5,10 +5,10 @@ MAINTAINER binhex
 ##################
 
 # download madsonic
-ADD http://beta.madsonic.org/request.jsp?branch=5.1&target=20141017_madsonic-5.1.5200-standalone.zip /var/madsonic/madsonic.zip
+ADD http://www.madsonic.org/download/5.1/20141017_madsonic-5.1.5200-standalone.zip /var/madsonic/madsonic.zip
 
 # download madsonic transcoders
-ADD http://beta.madsonic.org/request.jsp?branch=transcode&target=20141017_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+ADD http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
 # copy transcode script to madsonic install dir (copies transcoders to madsonic install dir)
 ADD transcode.sh /var/madsonic/transcode.sh
