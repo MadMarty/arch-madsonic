@@ -10,8 +10,8 @@ ADD http://www.madsonic.org/download/5.1/20141017_madsonic-5.1.5200-standalone.z
 # download madsonic transcoders
 ADD http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
-# copy start bash script to madsonic install dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD start.sh /var/madsonic/start.sh
+# copy start bash script to autorun dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
+ADD start.sh /etc/profile.d/start.sh
 
 # add supervisor conf file for app
 ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
