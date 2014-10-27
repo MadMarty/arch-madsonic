@@ -12,6 +12,7 @@ ADD http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_lates
 
 # copy start bash script to autorun dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
 ADD start.sh /etc/profile.d/start.sh
+RUN chmod +x /etc/profile.d/start.sh
 
 # add supervisor conf file for app
 ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
