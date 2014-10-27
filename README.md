@@ -14,10 +14,12 @@ docker pull binhex/arch-madsonic
 **Run container**
 
 ```
-docker run -d -p 4040:4040 -p 4050:4050 --name=<container name> -v <path for media files>:/media -v <path for config files>:/config -v /etc/localtime:/etc/localtime:ro binhex/arch-madsonic
+docker run -d -p 4040:4040 -p 4050:4050 --name=<container name> -e SSL="yes" -v <path for media files>:/media -v <path for config files>:/config -v /etc/localtime:/etc/localtime:ro binhex/arch-madsonic
 ```
 
 Please replace all user variables in the above command defined by <> with the correct values.
+
+Note:- If you wish to use a secure connection (HTTPS) then please set the environment variable (SSL="yes") to "yes", otherwise set to "no" to use HTTP only.
 
 **Access application**
 
@@ -25,11 +27,8 @@ Please replace all user variables in the above command defined by <> with the co
 http://<host ip>:4040
 ```
 
-or for SSL
+or if you have enabled SSL
 
 ```
 https://<host ip>:4050
 ```
-
-
-
