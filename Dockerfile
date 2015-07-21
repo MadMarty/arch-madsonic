@@ -18,8 +18,7 @@ ADD start.sh /opt/madsonic/start.sh
 #############
 
 # make executable and run bash scripts to install app
-RUN chmod +x /root/*.sh /opt/madsonic/*.sh && \
-	/bin/bash /root/install.sh
+RUN chmod +x /root/*.sh /opt/madsonic/*.sh && /bin/bash /root/install.sh
 
 # docker settings
 #################
