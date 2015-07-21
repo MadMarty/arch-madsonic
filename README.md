@@ -3,7 +3,7 @@ Madsonic
 
 Madsonic - http://www.madsonic.org/
 
-Latest Public Release of Madsonic.
+Latest Beta Release of Madsonic.
 
 **Pull image**
 
