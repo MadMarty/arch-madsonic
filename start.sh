@@ -2,7 +2,7 @@
 
 #create folders on config
 mkdir -p /config/media/incoming
-mkdir -p /config/media/podcast
+mkdir -p /config/media/podcasts
 mkdir -p /config/playlists/import
 mkdir -p /config/playlists/export
 mkdir -p /config/playlists/backup
