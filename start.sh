@@ -1,23 +1,27 @@
 #!/bin/sh
 
-# enable/disable ssl based on env variable set from docker container run command
- if [ $SSL == "yes" ]; then
- 	sed -i 's/MADSONIC_PORT=4040/MADSONIC_PORT=0/g' /var/madsonic/madsonic.sh
-	sed -i 's/MADSONIC_HTTPS_PORT=0/MADSONIC_HTTPS_PORT=4050/g' /var/madsonic/madsonic.sh
-	echo "Enabling SSL for Madsonic"
-	
- elif [ $SSL == "no" ]; then
-  	sed -i 's/MADSONIC_PORT=0/MADSONIC_PORT=4040/g' /var/madsonic/madsonic.sh
- 	sed -i 's/MADSONIC_HTTPS_PORT=4050/MADSONIC_HTTPS_PORT=0/g' /var/madsonic/madsonic.sh
- 	echo "Disabling SSL for Madsonic"
- 
- else
-   	sed -i 's/MADSONIC_PORT=0/MADSONIC_PORT=4040/g' /var/madsonic/madsonic.sh
- 	sed -i 's/MADSONIC_HTTPS_PORT=4050/MADSONIC_HTTPS_PORT=0/g' /var/madsonic/madsonic.sh
-  	echo "SSL not defined, defaulting to disabled"
-	
- fi
- 
-# copy over ffmpeg and other transcoders
+#create folders on config
+mkdir -p /config/media/incoming
+mkdir -p /config/media/podcast
+mkdir -p /config/playlists/import
+mkdir -p /config/playlists/export
+mkdir -p /config/playlists/backup
 mkdir -p /config/transcode
-cp /var/madsonic/transcode/linux/* /config/transcode/
+
+#copy transcode to config directory - transcode directory is subdir of path set from --home flag, do not alter
+cp /opt/madsonic/transcode/linux/* /config/transcode/
+
+# enable/disable ssl based on env variable set from docker container run command
+ if [[ $SSL == "yes" ]]; then
+        echo "Enabling SSL for Madsonic"
+        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --https-port=4050 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
+
+ elif [[ $SSL == "no" ]]; then
+        echo "Disabling SSL for Madsonic"
+        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
+
+ else
+        echo "SSL not defined, defaulting to disabled"
+        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
+
+ fi

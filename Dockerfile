@@ -1,43 +1,24 @@
-FROM binhex/arch-base:2014101300
+FROM binhex/arch-base:2015062300
 MAINTAINER binhex
 
 # additional files
 ##################
 
-# download madsonic
-ADD http://www.madsonic.org/download/5.1/20141017_madsonic-5.1.5200-standalone.zip /var/madsonic/madsonic.zip
+# add supervisor conf file for app
+ADD *.conf /etc/supervisor/conf.d/
 
-# download madsonic transcoders
-ADD http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+# add bash scripts to install app
+ADD install.sh /root/install.sh
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD start.sh /var/madsonic/start.sh
-
-# add supervisor conf file for app
-ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
+ADD start.sh /opt/madsonic/start.sh
 
 # install app
 #############
 
-# install install app using pacman, set perms, cleanup
-RUN pacman -Sy --noconfirm && \
-	pacman -S libcups jre7-openjdk-headless fontconfig unzip --noconfirm && \
-	pacman -Scc --noconfirm && \
-	mkdir -p /var/madsonic/media && \
-	mkdir -p /var/madsonic/transcode && \
-	unzip /var/madsonic/madsonic.zip -d /var/madsonic && \
-	rm /var/madsonic/madsonic.zip && \
-	unzip /var/madsonic/transcode/transcode.zip -d /var/madsonic/transcode && \
-	rm /var/madsonic/transcode/transcode.zip && \
-	chown -R nobody:users /var/madsonic && \
-	chmod -R 775 /var/madsonic && \	
-	rm -rf /archlinux/usr/share/locale && \
-	rm -rf /archlinux/usr/share/man && \
-	rm -rf /root/* && \
-	rm -rf /tmp/*
-
-# force process to run as foreground task
-RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /var/madsonic/madsonic.sh
+# make executable and run bash scripts to install app
+RUN chmod +x /root/*.sh /opt/madsonic/*.sh && \
+	/bin/bash /root/install.sh
 
 # docker settings
 #################
