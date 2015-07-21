@@ -17,8 +17,8 @@ mkdir -p /opt/madsonic/transcode
 # download madsonic standalone
 curl -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/6.0/20150721_madsonic-6.0.6800-standalone.zip
 
-# download madsonic transcode
-curl -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20150704_madsonic-transcode_latest_x64.zip
+# download madsonic transcode 
+curl -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20150721_madsonic-transcode-x64.zip
 
 # unzip madsonic and transcode
 unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
