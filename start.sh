@@ -1,8 +1,5 @@
 #!/bin/bash
 
-chown -R nobody:users /config
-chmod -R 777 /config
-
 #create folders on config
 mkdir -p /config/media/incoming
 mkdir -p /config/media/podcasts
