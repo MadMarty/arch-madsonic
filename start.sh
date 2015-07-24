@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #create folders on config
 mkdir -p /config/media/incoming
