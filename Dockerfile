@@ -1,5 +1,4 @@
-FROM madevil/arch-base:latest
-
+FROM binhex/arch-base:2015062300
 MAINTAINER madevil
 
 # additional files
