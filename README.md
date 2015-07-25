@@ -1,20 +1,20 @@
 Madsonic
 =========
 
-Madsonic - http://www.madsonic.org/
+Madsonic - http://www.madsonic.org
 
 Latest Beta Release of Madsonic.
 
 **Pull image**
 
 ```
-docker pull madevil/arch-madsonic
+docker pull madsonic/arch-madsonic
 ```
 
 **Run container**
 
 ```
-docker run -d -p 4040:4040 -p 4050:4050 --name=<container name> -e SSL="yes" -v <path for media files>:/media -v <path for config files>:/config -v /etc/localtime:/etc/localtime:ro madevil/arch-madsonic
+docker run -d -p 4040:4040 -p 4050:4050 --name=<container name> -e SSL="yes" -v <path for media files>:/media -v <path for config files>:/config -v /etc/localtime:/etc/localtime:ro madsonic/arch-madsonic
 ```
 
 Please replace all user variables in the above command defined by <> with the correct values.
