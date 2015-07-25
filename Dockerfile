@@ -1,5 +1,5 @@
-FROM madevil/arch-base:latest
-MAINTAINER madevil
+FROM madsonic/arch-base:latest
+MAINTAINER Madsonic (support@madsonic.org)
 
 # additional files
 ##################
