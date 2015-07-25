@@ -1,7 +1,7 @@
-Madsonic
-=========
+Madsonic arch-linux docker image
+================================
 
-Madsonic - http://www.madsonic.org
+Madsonic http://www.madsonic.org
 
 Latest Beta Release of Madsonic.
 
